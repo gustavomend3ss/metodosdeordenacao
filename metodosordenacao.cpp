@@ -2,6 +2,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <chorno>
+#include <chrono>
 
 using namespace std;
