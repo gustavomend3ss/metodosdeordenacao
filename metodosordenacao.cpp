@@ -95,24 +95,36 @@ class Ordenacao {
             }
         }
 
+
         void ordenar(int opcao) {
             trocas = 0;
-            chrono::steady_clock::time_point inicio = chrono::steady_clock::now();
+
             if (opcao == 1) {
                 metodo = "Borbulhamento";
-                borbulhamento();
             } else if (opcao == 2) {
                 metodo = "Insercao";
+            } else if (opcao == 3) {
+                metodo = "Selecao";
+            } else {
+                return;
+            }
+
+            chrono::steady_clock::time_point inicio =
+                chrono::steady_clock::now();
+
+            if (opcao == 1) {
+                borbulhamento();
+            } else if (opcao == 2) {
                 insercao();
             } else {
-                metodo = "Selecao";
                 selecao();
             }
-            chrono::steady_clock::time_point fim = chrono::steady_clock::now();
-            
+
+            chrono::steady_clock::time_point fim =
+                chrono::steady_clock::now();
+
             tempo = chrono::duration<double, milli>(fim - inicio).count();
         }
-
         
         bool ret_crescente() {
             for (int i = 0; i < (int)v.size() - 1; i++) {
