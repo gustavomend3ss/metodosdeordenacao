@@ -36,6 +36,7 @@ class Ordenacao {
             return true;
         }
 
+        //bubble sort
         void borbulhamento() {
             int n = v.size();
             for (int i = 0; i < n - 1; i++) {
@@ -57,18 +58,22 @@ class Ordenacao {
             }
         }
 
+        //insert sort
         void insercao() {
             int n = v.size();
+
             for (int i = 1; i < n; i++) {
-                double chave = v[i];
-                int j = i - 1;
-                while (j >= 0 && v[j] > chave) {
-                    v[j + 1] = v[j];   
-                    j--;
+                int j = i;
+
+                while (j > 0 && v[j] < v[j - 1]) {
+                    double aux = v[j];
+                    v[j] = v[j - 1];
+                    v[j - 1] = aux;
+
                     trocas++;
+                    j--;
                 }
-                v[j + 1] = chave;      
-            }
+            }       
         }
 
         void selecao() {
