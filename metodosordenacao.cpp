@@ -36,6 +36,7 @@ class Ordenacao {
             return true;
         }
 
+        //bubble sort
         void borbulhamento() {
             int n = v.size();
             for (int i = 0; i < n - 1; i++) {
@@ -57,18 +58,22 @@ class Ordenacao {
             }
         }
 
+        //insert sort
         void insercao() {
             int n = v.size();
+
             for (int i = 1; i < n; i++) {
-                double chave = v[i];
-                int j = i - 1;
-                while (j >= 0 && v[j] > chave) {
-                    v[j + 1] = v[j];   
-                    j--;
+                int j = i;
+
+                while (j > 0 && v[j] < v[j - 1]) {
+                    double aux = v[j];
+                    v[j] = v[j - 1];
+                    v[j - 1] = aux;
+
                     trocas++;
+                    j--;
                 }
-                v[j + 1] = chave;      
-            }
+            }       
         }
 
         void selecao() {
@@ -90,24 +95,36 @@ class Ordenacao {
             }
         }
 
+
         void ordenar(int opcao) {
             trocas = 0;
-            chrono::steady_clock::time_point inicio = chrono::steady_clock::now();
+
             if (opcao == 1) {
                 metodo = "Borbulhamento";
-                borbulhamento();
             } else if (opcao == 2) {
                 metodo = "Insercao";
+            } else if (opcao == 3) {
+                metodo = "Selecao";
+            } else {
+                return;
+            }
+
+            chrono::steady_clock::time_point inicio =
+                chrono::steady_clock::now();
+
+            if (opcao == 1) {
+                borbulhamento();
+            } else if (opcao == 2) {
                 insercao();
             } else {
-                metodo = "Selecao";
                 selecao();
             }
-            chrono::steady_clock::time_point fim = chrono::steady_clock::now();
-            
+
+            chrono::steady_clock::time_point fim =
+                chrono::steady_clock::now();
+
             tempo = chrono::duration<double, milli>(fim - inicio).count();
         }
-
         
         bool ret_crescente() {
             for (int i = 0; i < (int)v.size() - 1; i++) {
@@ -133,6 +150,25 @@ class Ordenacao {
             cout << "\nTempo de ordenacao: " << tempo << " ms\n";
         }
 
+        bool salvar_resultado(string nome_arquivo) {
+            ofstream saida(nome_arquivo, ios::app);
+            if (!saida.is_open()) {
+                return false;
+            }
+            saida << "Metodo: " << metodo << "\n";
+            saida << "Numeros ordenados: " << v.size() << "\n";
+            if (ret_crescente()) {
+                saida << "Ordem crescente: SIM\n";
+            } else {
+                saida << "Ordem crescente: NAO\n";
+            }
+            saida << "Total de trocas: " << trocas << "\n";
+            saida << "Tempo de ordenacao: " << tempo << " ms\n";
+            saida << "------------------------------\n";
+            saida.close();
+            return true;
+        }
+
         long long ret_trocas() {
             return trocas;
         }
@@ -151,6 +187,11 @@ int main() {
         "Insercao",      // 2
         "Selecao"        // 3
     };
+
+    ofstream resultado("resultado.txt");
+    resultado << "=== RESULTADOS DOS METODOS DE ORDENACAO ===\n";
+    resultado << "------------------------------\n";
+    resultado.close();
 
     int opcao;
     do {
@@ -181,6 +222,12 @@ int main() {
         cout << "\nOrdenando com " << metodos[opcao - 1] << "...\n";
         ord.ordenar(opcao);
         ord.print_dados();
+
+        if (ord.salvar_resultado("resultado.txt")) {
+            cout << "Resultado salvo em resultado.txt\n";
+        } else {
+            cout << "Erro: nao foi possivel salvar o resultado!\n";
+        }
     } while (opcao != 0);
 
     return 0;
