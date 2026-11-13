@@ -1,0 +1,20 @@
+=== RESULTADOS DOS METODOS DE ORDENACAO ===
+------------------------------
+Metodo: Borbulhamento
+Numeros ordenados: 15000
+Ordem crescente: SIM
+Total de trocas: 55425287
+Tempo de ordenacao: 1279.78 ms
+------------------------------
+Metodo: Insercao
+Numeros ordenados: 15000
+Ordem crescente: SIM
+Total de trocas: 55425287
+Tempo de ordenacao: 772.7 ms
+------------------------------
+Metodo: Selecao
+Numeros ordenados: 15000
+Ordem crescente: SIM
+Total de trocas: 14988
+Tempo de ordenacao: 456.863 ms
+------------------------------
